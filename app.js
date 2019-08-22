@@ -44,7 +44,7 @@ app.post('/register', async (req, res, next) => {
         email: req.body.email,
         password: req.body.password
       });
-      const token = jwt.sign({ userId: user._id }, process.env.SECRET || 'Guantanamo');
+      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY || 'Guantanamo');
       res.json(token);
     }
   } catch(err) {
@@ -61,7 +61,7 @@ app.post('/login', async (req, res, next) => {
   try { 
     const user = await User.authenticate(req.body.email, req.body.password);
     if(user) {
-      const token = jwt.sign({ userId: user._id }, process.env.SECRET || 'Guantanamo');
+      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY || 'Guantanamo');
       res.json({ token });
     } else {
       res.status(401).json({ error: "User or password is invalid" });
